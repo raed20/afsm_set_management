@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <record id="view_product_set_line_wizard_form" model="ir.ui.view">
+    <field name="name">product.set.line.wizard.form</field>
+    <field name="model">product.set.line.wizard</field>
+    <field name="arch" type="xml">
+        <form string="Select Product">
+            <sheet>
+                <group>
+                    <field name="product_id"/>
+                </group>
+                <footer>
+                    <button string="Add Product" type="object" name="action_add_product" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+    </data>
+</odoo>

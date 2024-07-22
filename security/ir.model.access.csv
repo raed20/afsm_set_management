@@ -2,6 +2,8 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 
 access_product_set,product.set,model_product_set,base.group_user,1,1,1,1
 access_product_set_line,product.set.line,model_product_set_line,base.group_user,1,1,1,1
+access_product_set_line_wizard,product.set.line.wizard,model_product_set_line_wizard,base.group_user,1,1,1,1
+access_product_set_select_wizard,product.set.select.wizard,model_product_set_select_wizard,base.group_user,1,1,1,1
 
 
 

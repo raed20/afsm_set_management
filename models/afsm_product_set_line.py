@@ -26,9 +26,9 @@ class ProductSetLine(models.Model):
     # -------------------------------------------------------------------------
     # Constrains METHODS
     # -------------------------------------------------------------------------
-    _sql_constraints = [
-        ('product_set_line_unique', 'unique(reference_product_set_line)', 'product set line reference exists ')
-    ]
+    # _sql_constraints = [
+    #     ('product_set_line_unique', 'unique(reference_product_set_line)', 'product set line reference exists ')
+    # ]
 
     # -------------------------------------------------------------------------
     # ONCHANGE METHODS

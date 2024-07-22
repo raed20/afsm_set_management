@@ -58,53 +58,22 @@ class ProductSet(models.Model):
     # -------------------------------------------------------------------------
     # Action METHODS
     # -------------------------------------------------------------------------
-    @api.model
     def action_add_product(self):
-        self.ensure_one()
-        new_line = self.env['product.set.line'].create({
-            'product_id': False,
-            'quantity': 1.0,
-            'set_id': self.id,
-        })
-        self.lines_ids += new_line
         return {
             'type': 'ir.actions.act_window',
-            'res_model': 'product.set',
-            'res_id': self.id,
+            'name': 'Select Product',
             'view_mode': 'form',
-            'target': 'current',
-        }
-
-    @api.model
-    def action_add_set(self):
-        self.ensure_one()
-        return {
-            'name': 'Add Set',
-            'type': 'ir.actions.act_window',
-            'res_model': 'product.set.line',
-            'view_mode': 'tree,form',
+            'res_model': 'product.set.line.wizard',
             'target': 'new',
-            'context': {'default_set_id': self.id},
+            'context': {'default_set_id': self.id}
         }
 
-    @api.model
-    def add_set_lines(self, set_id):
-        set_to_add = self.env['product.set'].browse(set_id)
-        for line in set_to_add.lines_ids:
-            new_line = self.env['product.set.line'].create({
-                'product_id': line.product_id.id,
-                'quantity': line.quantity,
-                'set_id': self.id,
-                'unit_id': line.unit_id.id,
-                'reference_set': line.reference_set,
-                'related_work': line.related_work,
-                'specific_link': line.specific_link,
-            })
-            self.lines_ids += new_line
+
+    def action_add_product_set(self):
         return {
             'type': 'ir.actions.act_window',
-            'res_model': 'product.set',
-            'res_id': self.id,
+            'name': 'Select Product Set',
             'view_mode': 'form',
-            'target': 'current',
+            'res_model': 'product.set.select.wizard',
+            'target': 'new'
         }
