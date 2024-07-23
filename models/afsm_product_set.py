@@ -68,7 +68,6 @@ class ProductSet(models.Model):
             'context': {'default_set_id': self.id}
         }
 
-
     def action_add_product_set(self):
         return {
             'type': 'ir.actions.act_window',

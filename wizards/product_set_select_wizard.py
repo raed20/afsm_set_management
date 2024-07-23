@@ -19,5 +19,6 @@ class ProductSetSelectWizard(models.TransientModel):
                     'quantity': line.quantity,
                     'unit_id': line.unit_id.id,
                     'reference_product_set_line': line.reference_product_set_line,
+                    'set_name': selected_set.name,  # Ensure the set name is stored
                 })
         return {'type': 'ir.actions.act_window_close'}

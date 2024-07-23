@@ -22,5 +22,6 @@ class ProductSetLineWizard(models.TransientModel):
                 'quantity': 1,  # Default quantity, can be modified
                 'unit_id': self.product_id.uom_id.id,
                 'reference_product_set_line': self.product_id.default_code or '',
+                'set_name':False,
             })
         return {'type': 'ir.actions.act_window_close'}

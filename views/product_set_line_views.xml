@@ -7,11 +7,12 @@
                 <form string="product line">
                     <sheet>
                         <group>
-                            <field name="set_id"/>
+                            <field name="set_name" string="Product Set"/>
                             <field name="product_id"/>
                             <field name="quantity"/>
                             <field name="unit_id"/>
                             <field name="reference_product_set_line"/>
+
                         </group>
                     </sheet>
                 </form>
@@ -19,18 +20,19 @@
         </record>
 
         <!-- Tree view for product.set.line -->
-        <record id="view_tree_product_set_line" model="ir.ui.view">
-            <field name="name">product.set.line.tree</field>
-            <field name="model">product.set.line</field>
-            <field name="arch" type="xml">
-                <tree string="product line">
-                    <field name="set_id"/>
-                    <field name="product_id"/>
-                    <field name="quantity"/>
-                    <field name="unit_id"/>
-                    <field name="reference_product_set_line"/>
-                </tree>
-            </field>
-        </record>
+        <record id="view_product_set_line_tree" model="ir.ui.view">
+    <field name="name">product.set.line.tree</field>
+    <field name="model">product.set.line</field>
+    <field name="arch" type="xml">
+        <tree string="Product Set Lines">
+            <field name="set_name" string="Product Set" />
+            <field name="product_id" string="Product" />
+            <field name="reference_product_set_line" string="Reference" />
+            <field name="quantity" string="Quantity" />
+            <field name="unit_id" string="Unit of Measure" />
+        </tree>
+    </field>
+</record>
+
     </data>
 </odoo>
