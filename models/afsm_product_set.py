@@ -29,10 +29,11 @@ class ProductSet(models.Model):
         ('product_set_unique', 'unique(reference_set)', ' reference set exists ')
     ]
 
-    @api.constrains('product_id', 'set_id')
+    @api.constrains('lines_ids')
     def _check_unique_product_per_set(self):
-        for line in self:
-            if self.search_count([('product_id', '=', line.product_id.id), ('set_id', '=', line.set_id.id)]) > 1:
+        for set in self:
+            product_ids = set.lines_ids.mapped('product_id.id')
+            if len(product_ids) != len(set.lines_ids):
                 raise ValidationError("Each product can only be added once to a product set.")
 
     # -------------------------------------------------------------------------
