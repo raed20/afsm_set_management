@@ -13,20 +13,41 @@
                             <field name="quantity"/>
                         </group>
                         <notebook>
-                            <page string="Composants">
-                                <field name="lines_ids">
+                            <page string="Components">
+                                <field name="lines_ids" widget="section_and_note_one2many" mode="tree">
                                     <tree editable="bottom">
-                                        <field name="set_name"/>
-                                        <field name="product_id"/>
-                                        <field name="reference_product_set_line" readonly="1"/>
-                                        <field name="quantity"/>
-                                        <field name="unit_id"/>
+                                        <control>
+                                            <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                            <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                                        </control>
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name" widget="section_and_note_text" optional="show"/>
+                                        <field name="set_name" required="not display_type"/>
+                                        <field name="product_id" required="not display_type"/>
+                                        <field name="reference_product_set_line" required="not display_type"/>
+                                        <field name="quantity" required="not display_type"/>
+                                        <field name="unit_id" required="not display_type"/>
+                                        <field name="display_type" column_invisible="True"/>
                                     </tree>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <field name="display_type" invisible="1"/>
+                                                <field name="sequence" widget="handle"/>
+                                                <field name="name" widget="section_and_note_text"/>
+                                                <field name="set_name"/>
+                                                <field name="product_id" required="not display_type"/>
+                                                <field name="reference_product_set_line" required="not display_type"/>
+                                                <field name="quantity" required="not display_type"/>
+                                                <field name="unit_id" required="not display_type"/>
+                                            </group>
+                                        </sheet>
+                                    </form>
                                 </field>
-                                <button name="action_add_product" string="Add a product" type="object" class="oe_highlight"/>
-                                <button name="action_add_product_set" string="Add a set" type="object" class="oe_highlight"/>
+                                 <button name="action_add_product" string="Add Product" type="object" class="oe_stat_button" icon="fa-plus"/>
+                            <button name="action_add_product_set" string="Add Set" type="object" class="oe_stat_button" icon="fa-plus"/>
                             </page>
-                            <page string="Divers">
+                            <page string="Miscellaneous">
                                 <!-- Other fields can go here -->
                             </page>
                         </notebook>
@@ -40,7 +61,7 @@
             <field name="name">product.set.tree</field>
             <field name="model">product.set</field>
             <field name="arch" type="xml">
-                <tree string="Product Sets">
+                <tree>
                     <field name="name"/>
                     <field name="reference_set"/>
                     <field name="quantity"/>
@@ -53,15 +74,7 @@
             <field name="name">Sets</field>
             <field name="res_model">product.set</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[]</field>
         </record>
-        <record id="action_product_set_line_form" model="ir.actions.act_window">
-    <field name="name">Product Set Line</field>
-    <field name="res_model">product.set.line</field>
-    <field name="view_mode">form</field>
-    <field name="view_id" ref="view_form_product_set_line"/>
-</record>
-
 
         <!-- Menu Items -->
         <menuitem id="menu_product_set" name="Set Management"/>
