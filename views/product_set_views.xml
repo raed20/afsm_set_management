@@ -22,7 +22,7 @@
                                         </control>
                                         <field name="sequence" widget="handle"/>
                                         <field name="name" widget="section_and_note_text" optional="show"/>
-                                        <field name="set_name" required="not display_type"/>
+                                        <field name="set_name" required="false"/>
                                         <field name="product_id" required="not display_type"/>
                                         <field name="reference_product_set_line" required="not display_type"/>
                                         <field name="quantity" required="not display_type"/>
@@ -32,10 +32,10 @@
                                     <form>
                                         <sheet>
                                             <group>
-                                                <field name="display_type" invisible="1"/>
+                                                <field name="display_type" column_invisible="True"/>
                                                 <field name="sequence" widget="handle"/>
                                                 <field name="name" widget="section_and_note_text"/>
-                                                <field name="set_name"/>
+                                                <field name="set_name" required="false"/>
                                                 <field name="product_id" required="not display_type"/>
                                                 <field name="reference_product_set_line" required="not display_type"/>
                                                 <field name="quantity" required="not display_type"/>
