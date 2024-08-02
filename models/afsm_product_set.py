@@ -1,3 +1,5 @@
+from collections import Counter
+
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
@@ -30,14 +32,7 @@ class ProductSet(models.Model):
         ('product_set_unique', 'unique(reference_set)', ' reference set exists ')
     ]
 
-    # @api.constrains('lines_ids')
-    # def _check_unique_product_per_set(self):
-    #     for set in self:
-    #         product_ids = set.lines_ids.mapped('product_id.id')
-    #         if len(product_ids) != len(set.lines_ids):
-    #             raise ValidationError("Each product can only be added once to a product set.")
 
-    # -------------------------------------------------------------------------
     # ONCHANGE METHODS
     # -------------------------------------------------------------------------
     @api.onchange('quantity')
@@ -60,15 +55,7 @@ class ProductSet(models.Model):
     # -------------------------------------------------------------------------
     # Action METHODS
     # -------------------------------------------------------------------------
-    def action_add_product(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Select Product',
-            'view_mode': 'form',
-            'res_model': 'product.set.line.wizard',
-            'target': 'new',
-            'context': {'default_set_id': self.id}
-        }
+
 
     def action_add_product_set(self):
         return {

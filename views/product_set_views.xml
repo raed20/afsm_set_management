@@ -19,6 +19,8 @@
                                         <control>
                                             <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
                                             <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                                            <create name="action_product_control" string="Add a product"/>
+                                            <button name="action_trigger_add_product_set" string="Add Set" type="object" class="oe_stat_button" icon="fa-plus"/>
                                         </control>
                                         <field name="sequence" widget="handle"/>
                                         <field name="name" widget="section_and_note_text" optional="show"/>
@@ -44,7 +46,6 @@
                                         </sheet>
                                     </form>
                                 </field>
-                                 <button name="action_add_product" string="Add Product" type="object" class="oe_stat_button" icon="fa-plus"/>
                             <button name="action_add_product_set" string="Add Set" type="object" class="oe_stat_button" icon="fa-plus"/>
                             </page>
                             <page string="Miscellaneous">

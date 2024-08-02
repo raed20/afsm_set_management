@@ -1,6 +1,6 @@
 from odoo import models, fields, api
 
-from odoo17.odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError
 
 
 class ProductSetLine(models.Model):
@@ -15,7 +15,7 @@ class ProductSetLine(models.Model):
     product_id = fields.Many2one('product.product', string='Product' , ondelete='cascade')
     quantity = fields.Float(string='Quantity')
     unit_id = fields.Many2one('uom.uom', string='Unit of Measure')
-    reference_product_set_line = fields.Char(string='Reference')
+    reference_product_set_line = fields.Char(string='Reference', compute='_compute_reference_product_set_line', store=True)
     set_name = fields.Char(string='Product Set Name')  # Add this field
     display_type = fields.Selection([
         ('line_section', "Section"),
@@ -29,6 +29,16 @@ class ProductSetLine(models.Model):
     # COMPUTE METHODS
     # -------------------------------------------------------------------------
 
+    @api.depends('product_id')
+    def _compute_reference_product_set_line(self):
+        for line in self:
+            if line.product_id:
+                line.reference_product_set_line = line.product_id.default_code or ''
+                line.unit_id = line.product_id.uom_id.id
+                line.quantity = 1.00
+
+
+
     # -------------------------------------------------------------------------
     # SELECTION METHODS
     # -------------------------------------------------------------------------
@@ -37,19 +47,19 @@ class ProductSetLine(models.Model):
     # Constrains METHODS
     # -------------------------------------------------------------------------
 
-    @api.constrains('product_id', 'set_id')
-    def _check_unique_product_set(self):
-        for record in self:
-            if not record.product_id:
-                continue  # Skip records where product_id is not set
 
-            existing_lines = self.search([
-                ('set_id', '=', record.set_id.id),
-                ('product_id', '=', record.product_id.id),
-                ('id', '!=', record.id)  # Exclude the current record to handle update cases
-            ])
-            if existing_lines:
-                raise ValidationError(f"The product '{record.product_id.name}' is already in the current set.")
+    # Constrain method using the custom function
+    @api.constrains('set_id', 'product_id')
+    def _check_product_unique_in_set(self):
+        for record in self:
+            if record.set_id and record.product_id:
+                existing_lines = self.search([
+                    ('set_id', '=', record.set_id.id),
+                    ('product_id', '=', record.product_id.id),
+                    ('id', '!=', record.id)
+                ])
+                if existing_lines:
+                    raise ValidationError(f"The product '{record.product_id.name}' is already in the current set.")
 
     @api.constrains('product_id', 'quantity', 'unit_id', 'display_type')
     def _check_fields(self):
@@ -77,3 +87,8 @@ class ProductSetLine(models.Model):
     # Action METHODS
     # -------------------------------------------------------------------------
 
+    def action_trigger_add_product_set(self):
+        if self.set_id:
+            return self.set_id.action_add_product_set()
+        else:
+            raise ValidationError("No product set is associated with this line.")
