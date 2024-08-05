@@ -1,5 +1,13 @@
 <odoo>
     <data>
+        <record id="action_product_set_select_wizard" model="ir.actions.act_window">
+            <field name="name">Select Product Set</field>
+            <field name="res_model">product.set.select.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_product_set_select_wizard_form"/>
+            <field name="target">new</field>
+            <field name="context">{}</field>
+        </record>
         <!-- Form View for Product Set -->
         <record id="view_product_set_form" model="ir.ui.view">
             <field name="name">product.set.form</field>
@@ -17,11 +25,15 @@
                                 <field name="lines_ids" widget="section_and_note_one2many" mode="tree">
                                     <tree editable="bottom">
                                         <control>
-                                            <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
-                                            <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                                            <create name="add_section_control" string="Add a section"
+                                                    context="{'default_display_type': 'line_section'}"/>
+                                            <create name="add_note_control" string="Add a note"
+                                                    context="{'default_display_type': 'line_note'}"/>
                                             <create name="action_product_control" string="Add a product"/>
-                                            <button name="action_trigger_add_product_set" string="Add Set" type="object" class="oe_stat_button" icon="fa-plus"/>
+                                            <button name="%(action_product_set_select_wizard)d" string="Add a set" type="action"/>
+
                                         </control>
+
                                         <field name="sequence" widget="handle"/>
                                         <field name="name" widget="section_and_note_text" optional="show"/>
                                         <field name="set_name" required="false"/>
@@ -46,7 +58,6 @@
                                         </sheet>
                                     </form>
                                 </field>
-                            <button name="action_add_product_set" string="Add Set" type="object" class="oe_stat_button" icon="fa-plus"/>
                             </page>
                             <page string="Miscellaneous">
                                 <!-- Other fields can go here -->
@@ -80,6 +91,7 @@
         <!-- Menu Items -->
         <menuitem id="menu_product_set" name="Set Management"/>
         <menuitem id="menu_product_set_main" name="Products" parent="menu_product_set"/>
-        <menuitem id="menu_product_set_line_main" name="Sets" parent="menu_product_set_main" action="action_product_set_views"/>
+        <menuitem id="menu_product_set_line_main" name="Sets" parent="menu_product_set_main"
+                  action="action_product_set_views"/>
     </data>
 </odoo>

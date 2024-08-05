@@ -1,22 +1,23 @@
 <odoo>
     <data>
-        <record id="view_product_set_select_wizard_form" model="ir.ui.view">
-            <field name="name">product.set.select.wizard.form</field>
-            <field name="model">product.set.select.wizard</field>
-            <field name="arch" type="xml">
-                <form string="Select Product Set">
-                    <sheet>
-                        <group>
-                            <field name="set_id"/>
-                        </group>
-                        <footer>
-                            <button string="Add Set" type="object" name="action_add_product_set" class="btn-primary"/>
-                            <button string="Cancel" class="btn-secondary" special="cancel"/>
-                        </footer>
-                    </sheet>
-                </form>
-            </field>
-        </record>
+    <record id="view_product_set_select_wizard_form" model="ir.ui.view">
+        <field name="name">product.set.select.wizard.form</field>
+        <field name="model">product.set.select.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Select Product Set">
+                <group>
+                    <field name="set_id"/>
+
+                </group>
+                <footer>
+                    <button string="Add Product Set" type="object" name="action_add_product_set" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
 
     </data>
 </odoo>

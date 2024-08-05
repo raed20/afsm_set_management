@@ -12,18 +12,17 @@ class ProductSetLine(models.Model):
     # Fields declaration
 
     set_id = fields.Many2one('product.set', string='Product Set', required=False, ondelete='cascade')
-    product_id = fields.Many2one('product.product', string='Product' , ondelete='cascade')
+    product_id = fields.Many2one('product.product', string='Product', ondelete='cascade')
     quantity = fields.Float(string='Quantity')
     unit_id = fields.Many2one('uom.uom', string='Unit of Measure')
-    reference_product_set_line = fields.Char(string='Reference', compute='_compute_reference_product_set_line', store=True)
+    reference_product_set_line = fields.Char(string='Reference', compute='_compute_reference_product_set_line',
+                                             store=True)
     set_name = fields.Char(string='Product Set Name')  # Add this field
     display_type = fields.Selection([
         ('line_section', "Section"),
         ('line_note', "Note")])
     sequence = fields.Integer(string='Sequence', default=10)
     name = fields.Char(string='Description')
-
-
 
     # -------------------------------------------------------------------------
     # COMPUTE METHODS
@@ -37,8 +36,6 @@ class ProductSetLine(models.Model):
                 line.unit_id = line.product_id.uom_id.id
                 line.quantity = 1.00
 
-
-
     # -------------------------------------------------------------------------
     # SELECTION METHODS
     # -------------------------------------------------------------------------
@@ -46,7 +43,6 @@ class ProductSetLine(models.Model):
     # -------------------------------------------------------------------------
     # Constrains METHODS
     # -------------------------------------------------------------------------
-
 
     # Constrain method using the custom function
     @api.constrains('set_id', 'product_id')
@@ -67,7 +63,7 @@ class ProductSetLine(models.Model):
             if record.display_type not in ['line_section', 'line_note']:
                 if not record.product_id:
                     continue  # Skip records where product_id is not set
-                else :
+                else:
                     if not record.quantity:
                         raise ValidationError("The Quantity field is required.")
                     if not record.unit_id:
@@ -86,9 +82,3 @@ class ProductSetLine(models.Model):
     # -------------------------------------------------------------------------
     # Action METHODS
     # -------------------------------------------------------------------------
-
-    def action_trigger_add_product_set(self):
-        if self.set_id:
-            return self.set_id.action_add_product_set()
-        else:
-            raise ValidationError("No product set is associated with this line.")

@@ -8,13 +8,27 @@ class ProductSetSelectWizard(models.TransientModel):
 
     set_id = fields.Many2one('product.set', string='Product Set', required=True)
 
-    from odoo.exceptions import UserError
+    @api.model
+    def default_get(self, fields_list):
+        res = super(ProductSetSelectWizard, self).default_get(fields_list)
+
+        # Extract id from the context params
+        params = self.env.context.get('params', {})
+        set_id = params.get('id')
+
+        if set_id:
+            res.update({'set_id': set_id})
+            print(set_id)
+
+        return res
 
     def action_add_product_set(self):
         self.ensure_one()  # Ensure that only one record is processed at a time
 
         selected_set = self.set_id
-        current_set_id = self.env.context.get('active_id')
+        current_set_id = self.env.context.get('params', {}).get('id')  # Get the current set's ID from the context
+        print(selected_set)
+        print(current_set_id)
 
         if not selected_set or not current_set_id:
             raise UserError("Selected set or current set ID is missing.")
@@ -27,7 +41,6 @@ class ProductSetSelectWizard(models.TransientModel):
         # Get existing product IDs, sections, and notes in the current set
         existing_product_ids = current_product_set.lines_ids.filtered(
             lambda l: l.display_type != 'line_section' and l.display_type != 'line_note').mapped('product_id.id')
-        existing_lines = current_product_set.lines_ids
 
         # Collect products, sections, and notes from the selected set that are already in the current set
         duplicate_products = selected_set.lines_ids.filtered(lambda
@@ -62,3 +75,4 @@ class ProductSetSelectWizard(models.TransientModel):
                 })
 
         return {'type': 'ir.actions.act_window_close'}
+

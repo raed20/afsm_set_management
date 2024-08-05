@@ -17,6 +17,7 @@ class ProductSet(models.Model):
     quantity = fields.Float(string='Quantity')
 
 
+
     # -------------------------------------------------------------------------
     # COMPUTE METHODS
     # -------------------------------------------------------------------------
@@ -37,15 +38,17 @@ class ProductSet(models.Model):
     # -------------------------------------------------------------------------
     @api.onchange('quantity')
     def _onchange_quantity(self):
-        if not self._origin.quantity:
-            # If the set is new, we can't calculate a ratio, so we just skip the adjustment.
+        if not self._origin.quantity or self._origin.quantity == 0:
+            # If the set is new or the original quantity was 0, we can't calculate a ratio
             return
 
         # Calculate the ratio of the new quantity to the old quantity
-        ratio = self.quantity / self._origin.quantity if self._origin.quantity else 1
+        ratio = self.quantity / self._origin.quantity
 
         for line in self.lines_ids:
-            line.quantity = line.quantity * ratio
+            new_quantity = line._origin.quantity * ratio
+            line.quantity = new_quantity
+
     # -------------------------------------------------------------------------
     # CRUD METHODS
     # -------------------------------------------------------------------------
@@ -55,17 +58,5 @@ class ProductSet(models.Model):
     # -------------------------------------------------------------------------
     # Action METHODS
     # -------------------------------------------------------------------------
-
-
-    def action_add_product_set(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Select Product Set',
-            'view_mode': 'form',
-            'res_model': 'product.set.select.wizard',
-            'target': 'new'
-        }
-
-
 
 
