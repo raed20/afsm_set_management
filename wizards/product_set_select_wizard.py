@@ -75,4 +75,3 @@ class ProductSetSelectWizard(models.TransientModel):
                 })
 
         return {'type': 'ir.actions.act_window_close'}
-

@@ -82,3 +82,16 @@ class ProductSetLine(models.Model):
     # -------------------------------------------------------------------------
     # Action METHODS
     # -------------------------------------------------------------------------
+
+    def prepare_sale_order_line_values(self,order_id, set_line, sequence):
+        self.ensure_one()
+        line_values = {
+            'order_id': order_id,
+            'product_id': set_line.product_id.id,
+            'product_uom_qty': set_line.quantity,
+            'product_uom': set_line.unit_id.id,
+            'sequence': sequence,
+            'display_type': set_line.display_type,
+            'name': set_line.product_id.name,
+        }
+        return line_values

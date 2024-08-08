@@ -10,6 +10,7 @@
         'security/ir.model.access.csv',
         'views/product_set_views.xml',
         'wizards/product_set_view.xml',
+        'wizards/sale_product_set_wizard_view.xml',
     ],
 
     'demo': [
