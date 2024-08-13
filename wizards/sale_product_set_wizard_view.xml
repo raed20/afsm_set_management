@@ -4,29 +4,29 @@
         <field name="name">sale.product.set.wizard.form.view</field>
         <field name="model">sale.product.set.wizard</field>
         <field name="arch" type="xml">
-        <form string="Add set in sale order line">
-            <group name="main" colspan="4">
-                <field
-                        name="order_id"
-                        invisible="context.get('default_order_id')"
-                        domain="[('state', 'in', ('draft','sent'))]"
-                />
-                <field
-                        name="set_id"
-                />
+            <form string="Add set in sale order line">
+                <group name="main" colspan="4">
+                    <field
+                            name="order_id"
+                            invisible="context.get('default_order_id')"
+                            domain="[('state', 'in', ('draft','sent'))]"
+                    />
+                    <field
+                            name="set_id"
+                    />
 
-                <field name="skip_existing_products"/>
-            </group>
-            <footer>
-                <button
-                        name="add_set"
-                        string="Add set"
-                        type="object"
-                        class="oe_highlight"
-                />
-                <button special="cancel" string="Cancel" class="oe_link"/>
-            </footer>
-        </form>
+                    <field name="skip_existing_products"/>
+                </group>
+                <footer>
+                    <button
+                            name="add_set"
+                            string="Add set"
+                            type="object"
+                            class="oe_highlight"
+                    />
+                    <button special="cancel" string="Cancel" class="oe_link"/>
+                </footer>
+            </form>
         </field>
     </record>
     <record

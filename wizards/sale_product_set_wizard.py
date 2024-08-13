@@ -6,7 +6,6 @@ from odoo import _, api, exceptions, fields, models
 
 
 class SaleProductSetWizard(models.TransientModel):
-    _inherit = "product.set"
     _name = "sale.product.set.wizard"
     _description = "Wizard model to add product set into a quotation"
 
@@ -20,7 +19,6 @@ class SaleProductSetWizard(models.TransientModel):
         ondelete="cascade",
     )
     set_id = fields.Many2one('product.set', string='Product Set', required=True)
-
     partner_id = fields.Many2one(related="order_id.partner_id", ondelete="cascade")
     skip_existing_products = fields.Boolean(
         default=False,

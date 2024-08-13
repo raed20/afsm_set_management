@@ -85,6 +85,7 @@ class ProductSetLine(models.Model):
 
     def prepare_sale_order_line_values(self,order_id, set_line, sequence):
         self.ensure_one()
+        print(set_line.product_id.name)
         line_values = {
             'order_id': order_id,
             'product_id': set_line.product_id.id,
